@@ -30,7 +30,7 @@ class Answer
     /**
      * @ORM\Column(type="integer")
      */
-    private $votes;
+    private $votes=0;
 
     /**
      * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="answers")
