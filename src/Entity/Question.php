@@ -119,7 +119,7 @@ class Question
 
     public function getVotesString(): string
     {
-        $prefix = $this->getVotes() >=0 ? '+' : '-';
+        $prefix = $this->getVotes() >= 0 ? '+' : '-';
 
         return sprintf('%s %d', $prefix, abs($this->getVotes()));
     }
@@ -151,6 +151,13 @@ class Question
     public function getAnswers(): Collection
     {
         return $this->answers;
+    }
+
+    public function getApprovedAnswers(): Collection
+    {
+        return $this->answers->filter(function (Answer $answer) {
+            return $answer->isApproved();
+        });
     }
 
     public function addAnswer(Answer $answer): self
