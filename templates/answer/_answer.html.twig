@@ -4,7 +4,7 @@
            href="{{ path('app_question_show',
                { slug: answer.question.slug })
            }}">
-            <strong>Question: {{ answer.question.question }}</strong>
+            <strong>Question: {{ answer.questionText|u.truncate(80, '...') }}</strong>
         </a>
 
     {% endif %}
