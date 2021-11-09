@@ -42,14 +42,19 @@ class AnswerRepository extends ServiceEntityRepository
     /**
      * @return array Answer[]
      */
-    public function findMostPopular(): array
+    public function findMostPopular(string $search = null): array
     {
-        return $this->createQueryBuilder('answer')
+        $queryBuilder = $this->createQueryBuilder('answer')
             ->addCriteria(self::crateApprovedCriteria())
             ->orderBy('answer.votes', 'desc')
             ->innerJoin('answer.question', 'question')
-            ->addSelect('question')
-            ->setMaxResults(10)
+            ->addSelect('question');
+
+        if ($search) {
+            $queryBuilder->andWhere('answer.content LIKE :searchTerm OR  question.question LIKE :searchTerm')
+                ->setParameter('searchTerm', '%' . $search . '%');
+        }
+        return $queryBuilder->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
