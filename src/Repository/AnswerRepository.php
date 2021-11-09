@@ -47,6 +47,8 @@ class AnswerRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('answer')
             ->addCriteria(self::crateApprovedCriteria())
             ->orderBy('answer.votes', 'desc')
+            ->innerJoin('answer.question', 'question')
+            ->addSelect('question')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
