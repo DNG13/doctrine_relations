@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Factory\AnswerFactory;
 use App\Factory\QuestionFactory;
+use App\Factory\QuestionTagFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Factory\TagFactory;
@@ -14,9 +15,12 @@ class AppFixtures extends Fixture
     {
         TagFactory::createMany(100);
 
-        $questions = QuestionFactory::createMany(20, function () {
+        $questions = QuestionFactory::createMany(20);
+
+        QuestionTagFactory::createMany(100, function () {
             return [
-                'tags' => TagFactory::randomRange(0, 5)
+                'tag' => TagFactory::random(),
+                'question' => QuestionFactory::random(),
             ];
         });
 
